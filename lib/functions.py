@@ -60,7 +60,7 @@ def compose_mail(self):
         self.message.attach(attachment)
 
 def process_variables(self, data, var_file, replacements):
-  if os.path.isfile(var_file):  
+  if var_file:  
     with open(var_file, 'r') as f:
       for line in f:
         find, replace = line.split('=')
@@ -145,6 +145,8 @@ def send_loop(self):
 
         if self.variable_file:
           var_file = '%s.txt' % (self.variable_file)
+        else:
+          var_file = None
   
         data_txt = process_variables(self, data_txt, var_file, replacements)
 
@@ -157,6 +159,8 @@ def send_loop(self):
         
         if self.variable_file:
           var_file = '%s.html' % (self.variable_file)
+        else:
+          var_file = None
 
         data_html = process_variables(self, data_html, var_file, replacements)
         
