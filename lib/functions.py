@@ -60,15 +60,18 @@ def compose_mail(self):
         self.message.attach(attachment)
 
 def process_variables(self, data, var_file, replacements):
-  with open(var_file, 'r') as f:
-    for line in f:
-      find, replace = line.split('=')
-      if self.image_dir:
-        image_name = '%s/%s' % (self.image_dir, replace)
-        if os.path.isfile(image_name):
-          replace = 'cid:%s' % ('.'.join(replace.split('.')[:-1]))
+  if os.path.isfile(var_file):  
+    with open(var_file, 'r') as f:
+      for line in f:
+        find, replace = line.split('=')
+        
+        if self.image_dir:
+          image_name = '%s/%s' % (self.image_dir, replace)
 
-      data = data.replace(find, replace)
+          if os.path.isfile(image_name):
+            replace = 'cid:%s' % ('.'.join(replace.split('.')[:-1]))
+
+        data = data.replace(find, replace)
 
   for k,v in replacements.iteritems():
     data = data.replace(k,v)
@@ -141,8 +144,7 @@ def send_loop(self):
           data_txt = f.read()
 
         var_file = '%s.txt' % (self.variable_file)
-        if os.path.isfile(var_file):
-          data_txt = process_variables(self, data_txt, var_file, replacements)
+        data_txt = process_variables(self, data_txt, var_file, replacements)
 
         txt_part = MIMEText(data_txt, 'text')
         self.message_alternative.attach(txt_part)
@@ -152,8 +154,7 @@ def send_loop(self):
           data_html = f.read()
 
         var_file = '%s.html' % (self.variable_file)
-        if os.path.isfile(var_file):
-          data_html = process_variables(self, data_html, var_file, replacements)
+        data_html = process_variables(self, data_html, var_file, replacements)
         
         html_part = MIMEText(data_html, 'html')
         self.message_related.attach(html_part)
