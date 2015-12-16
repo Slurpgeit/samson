@@ -143,7 +143,9 @@ def send_loop(self):
         with open(template_txt,'r') as f:
           data_txt = f.read()
 
-        var_file = '%s.txt' % (self.variable_file)
+        if self.variable_file:
+          var_file = '%s.txt' % (self.variable_file)
+  
         data_txt = process_variables(self, data_txt, var_file, replacements)
 
         txt_part = MIMEText(data_txt, 'text')
@@ -152,8 +154,10 @@ def send_loop(self):
       if os.path.isfile(template_html):
         with open(template_html,'r') as f:
           data_html = f.read()
+        
+        if self.variable_file:
+          var_file = '%s.html' % (self.variable_file)
 
-        var_file = '%s.html' % (self.variable_file)
         data_html = process_variables(self, data_html, var_file, replacements)
         
         html_part = MIMEText(data_html, 'html')
