@@ -135,6 +135,7 @@ def send_loop(self):
       replacements = {}
       var_list = line.strip().split(';')
       recipient = var_list[0]
+      self.message['To'] = recipient
 
       for k,v in enumerate(var_list):
         replacements.update({'[[%s]]' % k:'%s' % v})
