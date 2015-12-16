@@ -1,0 +1,2 @@
+[[VAR1]]=Variable 1
+[[IMG1]]=example_image.png

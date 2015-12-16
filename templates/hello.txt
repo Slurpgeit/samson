@@ -1,0 +1,6 @@
+Hello
+
+Your email address: [[0]]
+Your username: [[1]]
+Your UID: [[2]]
+Variable 1: [[VAR1]]
