@@ -39,7 +39,7 @@ def parse_recipients(self):
 
   with open(self.recipients_file) as f:
     for line in f:
-      recipient = line.split(';')
+      recipient = line.strip().split(';')
       self.recipients.append({'email':recipient[0].strip(), 'id':recipient[1].strip()})
  
 def compose_mail(self):
@@ -63,7 +63,7 @@ def process_variables(self, data, var_file, replacements):
   if var_file:  
     with open(var_file, 'r') as f:
       for line in f:
-        find, replace = line.split('=')
+        find, replace = line.strip().split('=')
         
         if self.image_dir:
           image_name = '%s/%s' % (self.image_dir, replace)
