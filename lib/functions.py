@@ -17,7 +17,8 @@ def parse_args():
   parser.add_argument('-f', metavar='<sender address>', help='Sender address to use', required=True)
   parser.add_argument('-c', metavar='<server>', help='Outgoing server to use', default='127.0.0.1')
   parser.add_argument('-p', metavar='<port>', help='Port to use', default=25, type=int)
-  parser.add_argument('-v', metavar='<variable file>', help='Varialble file')
+  parser.add_argument('-P', help='Send high priority', action='store_true')
+  parser.add_argument('-v', metavar='<variable file>', help='Variable file')
   parser.add_argument('-e', help='Enable STARTTLS', action='store_true')
   parser.add_argument('-u', metavar='<username>', help='Username')
   parser.add_argument('-w', metavar='<password>', help='Password')
@@ -117,6 +118,10 @@ def init_message(self):
 
   self.message['From'] = '"%s" <%s>' % (self.from_name, self.from_address)
   self.message['Subject'] = self.subject
+  if self.priority:
+    self.message['X-Priority'] = '1 (Highest)'
+    self.message['X-MSMail-Priority'] = 'High'
+    self.message['Importance'] = 'High'
 
 def send_loop(self):
   template_txt = '%s.txt' % self.template_file
