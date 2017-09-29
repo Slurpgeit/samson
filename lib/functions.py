@@ -156,7 +156,7 @@ def send_loop(self):
   
         data_txt = process_variables(self, data_txt, var_file, replacements)
 
-        txt_part = MIMEText(data_txt, 'text')
+        txt_part = MIMEText(data_txt, 'plain')
         self.message_alternative.attach(txt_part)
 
       if os.path.isfile(template_html):
