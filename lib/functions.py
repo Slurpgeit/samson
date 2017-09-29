@@ -206,7 +206,7 @@ def send_loop(self):
 
 def build_message(self):
   self.message.attach(self.message_alternative)
-  self.message_alternative.attach(self.message_related)
+  self.message.attach(self.message_related)
   add_attachments(self)
 
 def show_accept_prompt(self):
