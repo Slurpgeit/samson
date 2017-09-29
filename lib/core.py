@@ -12,6 +12,7 @@ class Spammert:
     self.template_file = self.args.t
     self.mail_server = self.args.c
     self.mail_port = self.args.p
+    self.priority = self.args.P
     self.variable_file = self.args.v
     self.starttls = self.args.e
     self.username = self.args.u
