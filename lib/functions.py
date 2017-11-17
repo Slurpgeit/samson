@@ -64,15 +64,21 @@ def process_variables(self, data, var_file, replacements):
   if var_file:  
     with open(var_file, 'r') as f:
       for line in f:
-        find, replace = line.strip().split('=')
-        
-        if self.image_dir:
-          image_name = '%s/%s' % (self.image_dir, replace)
+        if line[0] != '#':
+          error = False
+          try:
+            find, replace = line.strip().split('=', 1)
+          except ValueError:
+            error == True
 
-          if os.path.isfile(image_name):
-            replace = 'cid:%s' % ('.'.join(replace.split('.')[:-1]))
+          if self.image_dir:
+            image_name = '%s/%s' % (self.image_dir, replace)
 
-        data = data.replace(find, replace)
+            if os.path.isfile(image_name):
+              replace = 'cid:%s' % ('.'.join(replace.split('.')[:-1]))
+
+          if error == False:
+            data = data.replace(find, replace)
 
   for k,v in replacements.iteritems():
     data = data.replace(k,v)
