@@ -40,8 +40,9 @@ def parse_recipients(self):
 
   with open(self.recipients_file) as f:
     for line in f:
-      recipient = line.strip().split(';')
-      self.recipients.append({'email':recipient[0].strip(), 'id':recipient[1].strip()})
+      if line.strip():
+        recipient = line.strip().split(';')
+        self.recipients.append({'email':recipient[0].strip(), 'id':recipient[1].strip()})
  
 def compose_mail(self):
   if self.attachment_dir:
@@ -149,7 +150,8 @@ def send_loop(self):
       self.message['To'] = recipient
 
       for k,v in enumerate(var_list):
-        replacements.update({'[[%s]]' % k:'%s' % v})
+        value = v.decode('utf_8').encode('ascii', 'xmlcharrefreplace')
+        replacements.update({'[[%s]]' % k:'%s' % value})
 
       if os.path.isfile(template_txt):
         with open(template_txt,'r') as f:
